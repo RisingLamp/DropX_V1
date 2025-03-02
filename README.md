@@ -46,7 +46,7 @@ Ensure you have the following installed:
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-repo/dropx.git
+   git clone https://github.com/RisingLamp/Drop-X.git
    cd dropx
    ```
 2. Install dependencies:
@@ -61,8 +61,8 @@ Ensure you have the following installed:
 
 ## Deployment
 
-DropX is currently hosted on Vercel:
-[Live Demo]( )
+DropX is currently hosted on netlify:
+[Live Demo](https://drop-x.netlify.app/ )
 
 ## Contributors
 
