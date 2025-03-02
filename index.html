@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DropX - Hassel Free Sharing</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- Header -->
+      <header class="header">
+        <div class="container">
+          <div class="header-content">
+            <div class="logo">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-share"
+              >
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+              <span class="logo-text">DropX</span>
+            </div>
+            <div class="peer-id-display">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-wifi"
+              >
+                <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                <line x1="12" y1="20" x2="12.01" y2="20"></line>
+              </svg>
+              <span class="peer-id"
+                >Your ID: <span id="my-peer-id">Connecting...</span></span
+              >
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Manual Connect Section -->
+      <div class="section connect-section">
+        <div class="section-header">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-link"
+          >
+            <path
+              d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
+            ></path>
+            <path
+              d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
+            ></path>
+          </svg>
+          <h2>Connect to Peer</h2>
+        </div>
+        <div class="connect-form">
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="manual-peer-id"
+              placeholder="Enter 4-character Peer ID"
+              maxlength="6"
+              class="peer-id-input"
+            />
+            <p id="connect-error" class="error-message"></p>
+          </div>
+          <button id="connect-button" class="button primary-button">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-link"
+            >
+              <path
+                d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
+              ></path>
+              <path
+                d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
+              ></path>
+            </svg>
+            <span>Connect</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Connected Peers -->
+      <div id="peers-section" class="section peers-section hidden">
+        <div class="section-header">
+          <h2>Available Devices</h2>
+          <span id="peers-count" class="peers-count">0 device(s) found</span>
+        </div>
+        <div id="peers-list" class="peers-list">
+          <!-- Peers will be added here dynamically -->
+        </div>
+      </div>
+
+      <!-- File Upload Area -->
+      <div id="drop-area" class="section drop-area">
+        <input type="file" id="file-input" class="hidden" multiple />
+        <div class="drop-content">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-file-up"
+          >
+            <path
+              d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
+            ></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <path d="M12 12v6"></path>
+            <path d="m15 15-3-3-3 3"></path>
+          </svg>
+          <p class="drop-title">Drag and Drop your files here</p>
+          <p class="drop-subtitle">or</p>
+          <button id="browse-button" class="button primary-button">
+            Browse Files
+          </button>
+        </div>
+      </div>
+
+      <!-- Selected Files -->
+      <div
+        id="selected-files-section"
+        class="section selected-files-section hidden"
+      >
+        <h2>Selected Files</h2>
+        <div id="selected-files-list" class="files-list">
+          <!-- Selected files will be added here dynamically -->
+        </div>
+      </div>
+
+      <!-- Transfer Progress -->
+      <div
+        id="transfer-progress-section"
+        class="section transfer-progress-section hidden"
+      >
+        <h2 id="transfer-type">Sending File...</h2>
+        <div class="progress-container">
+          <p id="file-name" class="file-name"></p>
+          <div class="progress-bar-container">
+            <div id="progress-bar" class="progress-bar"></div>
+          </div>
+          <p id="progress-percentage" class="progress-percentage">0%</p>
+        </div>
+      </div>
+
+      <!-- How to Use Section -->
+      <div class="section how-to-section">
+        <div class="section-header">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-help"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <h2>How to Use DropX</h2>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <p>
+              Your unique ID is displayed at the top. Share this ID with others
+              to connect.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <p>
+              DropX automatically scans for nearby devices. Available devices
+              will appear below.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <p>
+              Drag and drop files or click "Browse Files" to select files for
+              sharing.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <p>
+              Click the "Send" button next to any available device to transfer
+              your files.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <section id="features" class="features-section">
+        <h2 class="section-title">Key Features</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-zap"
+            >
+              <polygon
+                points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"
+              ></polygon>
+            </svg>
+            <h3>No Login Required</h3>
+            <p>Start sharing instantly without any registration</p>
+          </div>
+          <div class="feature-card">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-upload"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <h3>Large File Support</h3>
+            <p>Share files larger than 5GB+ with no restrictions</p>
+          </div>
+          <div class="feature-card">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-shield"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <h3>End-to-End Encryption</h3>
+            <p>Your files are encrypted and secure during transfer</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Team Section -->
+      <section id="team" class="team-section">
+        <h2 class="section-title">Our Team</h2>
+        <div class="team-grid">
+          <div class="team-card">
+            <img
+              src="https://images.unsplash.com/photo-1738369350430-87d667611998?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDIwfHRvd0paRnNrcEdnfHxlbnwwfHx8fHw%3D"
+              alt="Patil Uday"
+              class="team-image"
+            />
+            <h3>Patil Uday</h3>
+            <p></p>
+          </div>
+          <div class="team-card">
+            <img
+              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
+              alt="Tribhuvan Om"
+              class="team-image"
+            />
+            <h3>Tribhuvan Om</h3>
+            <p></p>
+          </div>
+          <div class="team-card">
+            <img
+              src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
+              alt="Yadav Dron"
+              class="team-image"
+            />
+            <h3>Yadav Dron</h3>
+            <p></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-logo">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-share"
+            >
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+            <span>DropX</span>
+          </div>
+          <p class="copyright">© 2025 DropX. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
