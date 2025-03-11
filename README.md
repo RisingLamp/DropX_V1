@@ -46,7 +46,7 @@ Ensure you have the following installed:
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/RisingLamp/Drop-X.git
+   git clone https://github.com/RisingLamp/DropX_V1.git
    cd dropx
    ```
 2. Install dependencies:
